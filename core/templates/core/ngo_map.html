@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-4">Nearby NGOs</h2>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<div id="map" style="height: 500px; border-radius: 10px;" class="mb-4"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+var map = L.map('map').setView([20.5937, 78.9629], 5);  // Center on India
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+}).addTo(map);
+
+{% for ngo in ngos %}
+    L.marker([{{ ngo.latitude }}, {{ ngo.longitude }}])
+        .addTo(map)
+        .bindPopup("<b>{{ ngo.name }}</b><br>{{ ngo.address }}<br>{{ ngo.phone }}");
+{% endfor %}
+</script>
+
+{% endblock %}

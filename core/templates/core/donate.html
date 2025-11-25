@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-4">Donate: {{ med.name }}</h2>
+
+<form method="POST" class="bg-white p-4 rounded shadow-sm">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label class="form-label">Select NGO</label>
+        <select name="ngo" class="form-control">
+            {% for ngo in ngos %}
+            <option value="{{ ngo.id }}">{{ ngo.name }} — {{ ngo.address }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Confirm Donation</button>
+</form>
+
+{% endblock %}

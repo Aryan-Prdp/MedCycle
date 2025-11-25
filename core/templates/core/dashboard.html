@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-4">Dashboard</h2>
+
+<div class="row text-center mb-4">
+
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm p-3">
+            <h4>Total Medicines</h4>
+            <h2>{{ total }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm p-3">
+            <h4>Donated</h4>
+            <h2 class="text-success">{{ donated }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm p-3">
+            <h4>Pending</h4>
+            <h2 class="text-warning">{{ pending }}</h2>
+        </div>
+    </div>
+
+</div>
+
+<hr>
+
+<h3>Expiring in Next 7 Days</h3>
+{% if expiring %}
+<table class="table table-bordered table-striped bg-white">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Expiry Date</th>
+            <th>Donate</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for m in expiring %}
+        <tr>
+            <td>{{ m.name }}</td>
+            <td>{{ m.expiry_date }}</td>
+            <td>
+                <a href="/donate/{{ m.id }}/" class="btn btn-primary btn-sm">Donate</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="text-muted">No medicines expiring soon.</p>
+{% endif %}
+
+<hr>
+
+<h3>Your Donation History</h3>
+<table class="table table-bordered table-striped bg-white">
+    <thead>
+        <tr>
+            <th>Medicine</th>
+            <th>NGO</th>
+            <th>Status</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for d in donations %}
+        <tr>
+            <td>{{ d.medicine.name }}</td>
+            <td>{{ d.ngo.name }}</td>
+            <td>{{ d.status }}</td>
+            <td>{{ d.created_at|date:"Y-m-d" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4" class="text-center text-muted">No donations yet.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-3">My Medicines</h2>
+
+<a href="/add/" class="btn btn-success mb-3">Add Medicine</a>
+
+<table class="table table-bordered table-striped bg-white">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Expiry Date</th>
+            <th>Donation</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for m in meds %}
+        <tr>
+            <td>{{ m.name }}</td>
+            <td>{{ m.quantity }}</td>
+            <td>{{ m.expiry_date }}</td>
+
+            <td>
+                {% if not m.donated %}
+                <a href="/donate/{{ m.id }}/" class="btn btn-primary btn-sm">Donate</a>
+                {% else %}
+                <span class="badge bg-success">Donated</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4" class="text-center text-muted">No medicines added yet.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

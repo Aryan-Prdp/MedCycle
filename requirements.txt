@@ -1,0 +1,9 @@
+Django==5.0
+pillow
+pytesseract
+djangorestframework
+django-crispy-forms
+celery
+redis
+psycopg2-binary
+python-dotenv
